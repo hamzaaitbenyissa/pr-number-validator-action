@@ -25,9 +25,6 @@ runs:
         echo "PR Number: $PR_NUMBER"
         echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
       shell: bash
-
-    - name: Output custom message
-      run: echo "${{ inputs.message }}"
 branding:
   icon: "code"
   color: "green"
