@@ -1,0 +1,33 @@
+name: PR Number Validator
+description: A simple GitHub Action to retrieve and output the pull request number.
+inputs:
+  message:
+    description: A message to include in the output.
+    required: false
+    default: "PR Number Retrieved"
+outputs:
+  pr_number:
+    description: The pull request number.
+runs:
+  using: "composite"
+  steps:
+    - name: Check if triggered by a pull request
+      run: |
+        if [ "${{ github.event_name }}" != "pull_request" ]; then
+          echo "This action only works for pull request events."
+          exit 1
+        fi
+      shell: bash
+
+    - name: Retrieve PR Number
+      run: |
+        PR_NUMBER="${{ github.event.pull_request.number }}"
+        echo "PR Number: $PR_NUMBER"
+        echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Output custom message
+      run: echo "${{ inputs.message }}"
+branding:
+  icon: "code"
+  color: "green"
